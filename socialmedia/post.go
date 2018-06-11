@@ -1,4 +1,4 @@
-// Package smedia implements common functionality needed for social media
+// Package socialmedia implements common functionality needed for social media
 // web applications.
 package socialmedia
 

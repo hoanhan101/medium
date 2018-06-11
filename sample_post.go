@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/hoanhan101/isomorphic-web/social_media"
+	"github.com/hoanhan101/isomorphic-web/socialmedia"
 	"log"
 )
 
 func main() {
-	post := social_media.NewPost(
+	post := socialmedia.NewPost(
 		"Hoanh An",
-		social_media.Moods["happy"],
+		socialmedia.Moods["happy"],
 		"Sample caption",
 		"Sanple message body",
 		"Sample URL",
