@@ -48,3 +48,5 @@ func TestCheckUsernameRandom(t *testing.T) {
 		}
 	}
 }
+
+// TODO: Test email validation
