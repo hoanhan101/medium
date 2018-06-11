@@ -1,3 +1,5 @@
+// Package validationkit validates user's name and email based on custom
+// regular expression pattern.
 package validationkit
 
 import (
