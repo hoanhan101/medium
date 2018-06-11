@@ -1,4 +1,4 @@
-package validation_kit
+package validationkit
 
 import (
 	"math/rand"

@@ -1,4 +1,4 @@
-package validation_kit
+package validationkit
 
 import (
 	"log"
@@ -14,7 +14,7 @@ const (
 	// at least 1 minimum character and maximum 15 characters.
 	UsernameRegexp string = `^@?(\w){1,15}$`
 
-	// EmailRegedxp uses regular experssion for email naming.
+	// EmailRegexp uses regular experssion for email naming.
 	EmailRegexp string = `(?i)^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})+$`
 )
 

@@ -1,11 +1,12 @@
-// Package social_media implements common functionality needed for social media
+// Package smedia implements common functionality needed for social media
 // web applications.
-package social_media
+package socialmedia
 
 import (
 	"time"
 )
 
+// MoodState represents an iota enumerator.
 //go:generate stringer -type=MoodState
 type MoodState int
 
