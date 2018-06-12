@@ -5,3 +5,7 @@
 .container-width {
     max-width: 1000px;
 }
+
+.underline {
+    text-decoration: underline;
+}
