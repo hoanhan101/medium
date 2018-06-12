@@ -18,7 +18,6 @@ func FetchPosts(w http.ResponseWriter, r *http.Request) {
 
 		post1 := socialmedia.NewPost(
 			"hoanhan",
-			socialmedia.Moods["neutral"],
 			"Caption 1",
 			"Body 1",
 			"URL 1",
@@ -29,7 +28,6 @@ func FetchPosts(w http.ResponseWriter, r *http.Request) {
 
 		post2 := socialmedia.NewPost(
 			"hoanhan",
-			socialmedia.Moods["happy"],
 			"Caption 2",
 			"Body 2",
 			"URL 2",
@@ -40,7 +38,6 @@ func FetchPosts(w http.ResponseWriter, r *http.Request) {
 
 		post3 := socialmedia.NewPost(
 			"hoanhan",
-			socialmedia.Moods["sad"],
 			"Caption 3",
 			"Body 3",
 			"URL 3",
