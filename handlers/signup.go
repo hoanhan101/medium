@@ -90,7 +90,8 @@ func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
 		s.Errors["confirmPasswordError"] = "Password and confirm password don't match"
 	}
 
-	// Only process if there exists no error.
+	// Only process if there exists no error. Otherwise, display the SignUpForm
+	// again with entered values.
 	if len(s.Errors) > 0 {
 		DisplaySignUpForm(w, r, s)
 	} else {
@@ -113,5 +114,5 @@ func ProcessSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
 
 // DisplayConfirmation notifies a successful registration.
 func DisplayConfirmation(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
-	RenderUnsafeTemplate(w, "./templates/signupconfirmation.html", s)
+	RenderTemplate(w, "./templates/signupconfirmation.html", s)
 }
