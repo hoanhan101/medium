@@ -7,9 +7,9 @@ import (
 	ghandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 
-	"github.com/hoanhan101/isocial/endpoints"
-	"github.com/hoanhan101/isocial/handlers"
-	"github.com/hoanhan101/isocial/middleware"
+	"github.com/hoanhan101/medium/endpoints"
+	"github.com/hoanhan101/medium/handlers"
+	"github.com/hoanhan101/medium/middleware"
 )
 
 const (
@@ -49,8 +49,10 @@ func main() {
 	// handler. middleware.RecoverPanicHandler() chains the ghandlers to catch
 	// any panic causes. Finally, middleware.ContextHandler persists the
 	// context value, which is foo in this situation.
-	http.Handle("/", middleware.ContextHandler(
-		middleware.RecoverPanicHandler(ghandlers.LoggingHandler(os.Stdout, r))))
+	http.Handle("/", middleware.ContextHandler(middleware.RecoverPanicHandler(ghandlers.LoggingHandler(os.Stdout, r))))
+
+	// Fix path to static folder.
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
 	// Pass the context value through the request.
 	http.ListenAndServe(PORT, nil)

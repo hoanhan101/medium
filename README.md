@@ -1,4 +1,4 @@
-# isocial
+# medium
 
 **References:**
 - [Web Programming with Go by Kamesh

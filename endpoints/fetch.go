@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/hoanhan101/isocial/models/socialmedia"
+	"github.com/hoanhan101/medium/models/socialmedia"
 )
 
 // FetchPosts fetches all posts for a given user.

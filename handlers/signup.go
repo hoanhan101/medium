@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/hoanhan101/isocial/validationkit"
+	"github.com/hoanhan101/medium/validationkit"
 )
 
 // SignUpForm is responsible for registering fields.
