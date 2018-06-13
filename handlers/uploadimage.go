@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/hoanhan101/medium/common/utility"
+
 	"github.com/nfnt/resize"
 )
 
@@ -64,7 +66,7 @@ func ProcessUploadImage(w http.ResponseWriter, r *http.Request, u *UploadImageFo
 
 	// It's a good practice not to trust the filename that user sent.
 	// Generate a uuid for it instead.
-	randomFileName := GenerateUUID()
+	randomFileName := utility.GenerateUUID()
 
 	if fileheader != nil {
 		// Get the filename extension.
