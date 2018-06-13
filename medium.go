@@ -24,6 +24,7 @@ func main() {
 	r.HandleFunc("/", handlers.HomeHandler)
 	r.HandleFunc("/register", handlers.RegisterHandler).Methods("GET", "POST")
 	r.HandleFunc("/signup", handlers.SignUpHandler).Methods("GET", "POST")
+	r.HandleFunc("/postpreview", handlers.PostPreviewHandler).Methods("GET", "POST")
 	r.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
 	r.HandleFunc("/logout", handlers.LogoutHandler).Methods("POST")
 	r.HandleFunc("/feed", handlers.FeedHandler).Methods("GET")
@@ -31,6 +32,7 @@ func main() {
 	r.HandleFunc("/find", handlers.FindHandler).Methods("GET", "POST")
 	r.HandleFunc("/profile", handlers.MyProfileHandler).Methods("GET")
 	r.HandleFunc("/profile/{username}", handlers.ProfileHandler).Methods("GET")
+	r.HandleFunc("/upload/image", handlers.UploadImageHandler).Methods("GET", "POST")
 
 	// Temporary routes simulate different scenarios that are handled by
 	// middleware functions:
