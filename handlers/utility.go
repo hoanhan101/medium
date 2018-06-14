@@ -8,7 +8,7 @@ import (
 
 // RenderTemplate is responsible for rendering data object into template file.
 func RenderTemplate(w http.ResponseWriter, templateFile string, templateData interface{}) {
-	t, err := template.ParseFiles(templateFile)
+	t, err := template.ParseFiles(templateFile, "./templates/header.html", "./templates/footer.html")
 	if err != nil {
 		log.Printf("Error encountered while parsing the template: ", err)
 	}
