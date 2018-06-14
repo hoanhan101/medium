@@ -1,15 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 
-	ghandlers "github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
-
+	"github.com/hoanhan101/medium/common"
+	"github.com/hoanhan101/medium/common/datastore"
 	"github.com/hoanhan101/medium/endpoints"
 	"github.com/hoanhan101/medium/handlers"
 	"github.com/hoanhan101/medium/middleware"
+
+	ghandlers "github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -18,12 +21,28 @@ const (
 )
 
 func main() {
+	// Create a new datastore instance.
+	db, err := datastore.NewDatastore(datastore.MYSQL, "medium:medium@/mediumdb")
+	// db, err := datastore.NewDatastore(datastore.MONGODB, "localhost:27017")
+	// db, err := datastore.NewDatastore(datastore.REDIS, "localhost:6379")
+	defer db.Close()
+
+	if err != nil {
+		log.Print(err)
+	}
+
+	// Use env variable to pass the datastore connection as the dependency
+	// injection to the SignUpHandler.
+	env := common.Env{DB: db}
+
+	// Create a new mux router.
 	r := mux.NewRouter()
 
 	// Core routes.
+	r.Handle("/signup", handlers.SignUpHandler(&env)).Methods("GET", "POST")
+
 	r.HandleFunc("/", handlers.HomeHandler)
 	r.HandleFunc("/register", handlers.RegisterHandler).Methods("GET", "POST")
-	r.HandleFunc("/signup", handlers.SignUpHandler).Methods("GET", "POST")
 	r.HandleFunc("/postpreview", handlers.PostPreviewHandler).Methods("GET", "POST")
 	r.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
 	r.HandleFunc("/logout", handlers.LogoutHandler).Methods("POST")
