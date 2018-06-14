@@ -8,6 +8,8 @@ import (
 
 // PostForm represents a social media post form.
 type PostForm struct {
+	PageTitle string
+
 	// FieldNames is a collection of all the fields that we want to prefill
 	// in case user makes a mistake.
 	FieldNames []string
@@ -22,6 +24,7 @@ type PostForm struct {
 // PostPreviewHandler handles http request for postpreview route.
 func PostPreviewHandler(w http.ResponseWriter, r *http.Request) {
 	p := PostForm{}
+	p.PageTitle = "Post Preview"
 	p.FieldNames = []string{
 		"caption",
 		"messageBody",

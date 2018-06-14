@@ -11,6 +11,8 @@ import (
 
 // SignUpForm is responsible for registering fields.
 type SignUpForm struct {
+	PageTitle string
+
 	// FieldNames is a collection of all the fields that we want to prefill
 	// in case user makes a mistake.
 	FieldNames []string
@@ -26,6 +28,7 @@ type SignUpForm struct {
 func SignUpHandler(e *common.Env) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		s := SignUpForm{}
+		s.PageTitle = "Sign Up"
 		s.FieldNames = []string{
 			"username",
 			"firstName",

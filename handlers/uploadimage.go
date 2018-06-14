@@ -16,6 +16,8 @@ import (
 
 // UploadImageForm is responsible for uploading image.
 type UploadImageForm struct {
+	PageTitle string
+
 	// FieldNames is a collection of all the fields that we want to prefill
 	// in case user makes a mistake.
 	FieldNames []string
@@ -30,6 +32,7 @@ type UploadImageForm struct {
 // UploadImageHandler handles http request for upload/image route.
 func UploadImageHandler(w http.ResponseWriter, r *http.Request) {
 	u := UploadImageForm{}
+	u.PageTitle = "Upload Image"
 	u.Fields = make(map[string]string)
 	u.Errors = make(map[string]string)
 
