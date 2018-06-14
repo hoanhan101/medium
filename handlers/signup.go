@@ -1,8 +1,11 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
+	"github.com/hoanhan101/medium/common"
+	"github.com/hoanhan101/medium/models"
 	"github.com/hoanhan101/medium/validationkit"
 )
 
@@ -20,25 +23,27 @@ type SignUpForm struct {
 }
 
 // SignUpHandler handles http request for signup route.
-func SignUpHandler(w http.ResponseWriter, r *http.Request) {
-	s := SignUpForm{}
-	s.FieldNames = []string{
-		"username",
-		"firstName",
-		"lastName",
-		"email",
-	}
-	s.Fields = make(map[string]string)
-	s.Errors = make(map[string]string)
+func SignUpHandler(e *common.Env) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		s := SignUpForm{}
+		s.FieldNames = []string{
+			"username",
+			"firstName",
+			"lastName",
+			"email",
+		}
+		s.Fields = make(map[string]string)
+		s.Errors = make(map[string]string)
 
-	switch r.Method {
-	case "GET":
-		DisplaySignUpForm(w, r, &s)
-	case "POST":
-		ValidateSignUpForm(w, r, &s)
-	default:
-		DisplaySignUpForm(w, r, &s)
-	}
+		switch r.Method {
+		case "GET":
+			DisplaySignUpForm(w, r, &s)
+		case "POST":
+			ValidateSignUpForm(w, r, &s, e)
+		default:
+			DisplaySignUpForm(w, r, &s)
+		}
+	})
 }
 
 // DisplaySignUpForm renders template with SignUpForm values.
@@ -47,7 +52,7 @@ func DisplaySignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
 }
 
 // ValidateSignUpForm validates user's input SignUpForm values.
-func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
+func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm, e *common.Env) {
 	// Prefill the values that already entered by user.
 	PopulateFormField(r, s)
 
@@ -95,7 +100,7 @@ func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
 	if len(s.Errors) > 0 {
 		DisplaySignUpForm(w, r, s)
 	} else {
-		ProcessSignUpForm(w, r, s)
+		ProcessSignUpForm(w, r, s, e)
 	}
 }
 
@@ -107,8 +112,30 @@ func PopulateFormField(r *http.Request, s *SignUpForm) {
 }
 
 // ProcessSignUpFrom inserts values into database and displays confirmation message.
-func ProcessSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
-	// TODO: Insert to database. For now, only display confirmation message.
+func ProcessSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm, e *common.Env) {
+	// Create a new user object with the values user entered from the form.
+	u := models.NewUser(
+		r.FormValue("username"),
+		r.FormValue("firstName"),
+		r.FormValue("lastName"),
+		r.FormValue("email"),
+		r.FormValue("password"),
+	)
+
+	// Create a new user record in the database.
+	err := e.DB.CreateUser(u)
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Check if we can fetch the record from the database.
+	user, err := e.DB.GetUser(u.Username)
+	if err != nil {
+		log.Println(err)
+	} else {
+		log.Printf("Fetch user result: %+v\n", user)
+	}
+
 	DisplayConfirmation(w, r, s)
 }
 
