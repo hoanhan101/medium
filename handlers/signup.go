@@ -57,7 +57,7 @@ func DisplaySignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm) {
 // ValidateSignUpForm validates user's input SignUpForm values.
 func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm, e *common.Env) {
 	// Prefill the values that already entered by user.
-	PopulateFormField(r, s)
+	PopulateSignUpFormField(r, s)
 
 	// Make sure that every field is non-empty.
 	if r.FormValue("username") == "" {
@@ -107,14 +107,14 @@ func ValidateSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm, e
 	}
 }
 
-// PopulateFormField is responsible for prefilling the form.
-func PopulateFormField(r *http.Request, s *SignUpForm) {
+// PopulateSignUpFormField is responsible for prefilling the form.
+func PopulateSignUpFormField(r *http.Request, s *SignUpForm) {
 	for _, fieldName := range s.FieldNames {
 		s.Fields[fieldName] = r.FormValue(fieldName)
 	}
 }
 
-// ProcessSignUpFrom inserts values into database and displays confirmation message.
+// ProcessSignUpForm inserts values into database and displays confirmation message.
 func ProcessSignUpForm(w http.ResponseWriter, r *http.Request, s *SignUpForm, e *common.Env) {
 	// Create a new user object with the values user entered from the form.
 	u := models.NewUser(
