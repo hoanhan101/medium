@@ -17,7 +17,9 @@ var SessionStore *sessions.FilesystemStore
 
 func init() {
 	// SessionStore = sessions.NewFilesystemStore("/tmp/medium-sessions", []byte(os.Getenv("MEDIUM_HASH_KEY")))
-	SessionStore = sessions.NewFilesystemStore("/tmp/medium-sessions", []byte("CRKVBJs0kfyeQ9Y1"))
+
+	// Leave the first parameter an empty string to use os.TempDir()
+	SessionStore = sessions.NewFilesystemStore("", []byte("CRKVBJs0kfyeQ9Y1"))
 }
 
 // CreateUserSession creates a user session.
