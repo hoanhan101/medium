@@ -1,0 +1,27 @@
+{{template "header.html" .}}
+
+        <!-- Leading title -->
+        <div class="medium-width px-3 py-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Log In with Your Account</h1>
+        </div>
+
+        <!-- Core body -->
+        <div class="container medium-width">
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{.Fields.username}}">
+                    <small id="usernameError" class="form-text text-muted">{{.Errors.usernameError}}</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="{{.Fields.password}}">
+                    <small id="passwordError" class="form-text text-muted">{{.Errors.passwordError}}</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+        </div>
+
+{{template "footer.html" .}}
