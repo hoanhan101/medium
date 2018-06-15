@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/hoanhan101/medium/common"
+	"github.com/hoanhan101/medium/common/asyncq"
 	"github.com/hoanhan101/medium/common/datastore"
 	"github.com/hoanhan101/medium/endpoints"
 	"github.com/hoanhan101/medium/handlers"
@@ -22,6 +23,9 @@ const (
 )
 
 func main() {
+	// Start a task dispatcher with 9 workers.
+	asyncq.StartTaskDispatcher(9)
+
 	// Create a new datastore instance.
 	db, err := datastore.NewDatastore(datastore.MYSQL, "medium:medium@/mediumdb")
 	// db, err := datastore.NewDatastore(datastore.MONGODB, "localhost:27017")

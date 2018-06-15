@@ -1,17 +1,17 @@
 package handlers
 
 import (
-	"image/png"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
+	"github.com/hoanhan101/medium/common/asyncq"
 	"github.com/hoanhan101/medium/common/utility"
-
-	"github.com/nfnt/resize"
+	"github.com/hoanhan101/medium/tasks"
 )
 
 // UploadImageForm is responsible for uploading image.
@@ -58,6 +58,9 @@ func ValidateUploadImageForm(w http.ResponseWriter, r *http.Request, u *UploadIm
 
 // ProcessUploadImage stores images and creates thumbnail.
 func ProcessUploadImage(w http.ResponseWriter, r *http.Request, u *UploadImageForm) {
+	// Asynchronous flag.
+	shouldProcessThumbnailAsynchronously := true
+
 	// Get the image file that upload by request.
 	file, fileheader, err := r.FormFile("imageFile")
 	defer file.Close()
@@ -91,41 +94,25 @@ func ProcessUploadImage(w http.ResponseWriter, r *http.Request, u *UploadImageFo
 		// Copy the file content to our local file.
 		io.Copy(f, file)
 
-		// Create an image thumbnail path.
-		thumbnailPath := imagePathWithoutExtension + "_thumb.png"
-		originalImage, err := os.Open(imagePathWithoutExtension + extension)
-		defer originalImage.Close()
+		// Initialize a new image resizing task.
+		thumbnailResizeTask := tasks.NewResizeImageTask(imagePathWithoutExtension, extension)
 
-		if err != nil {
-			log.Println("Erro", err)
-			return
+		// Send the task over TaskQueue channel. Otherwise, process in a
+		// synchronous manner.
+		if shouldProcessThumbnailAsynchronously == true {
+			asyncq.TaskQueue <- thumbnailResizeTask
+		} else {
+			thumbnailResizeTask.Perform()
 		}
-
-		// Decode the original image.
-		img, err := png.Decode(originalImage)
-		if err != nil {
-			log.Println("Error encountered while decoding the image:", err)
-			return
-		}
-
-		// Resize to make a thumbnail.
-		thumbnail := resize.Resize(270, 0, img, resize.Lanczos3)
-		thumbnailFile, err := os.Create(thumbnailPath)
-		defer thumbnailFile.Close()
-
-		if err != nil {
-			log.Println("Error encountered while resizing the image:", err)
-			return
-		}
-
-		// Write back the thumbnail image to its file.
-		png.Encode(thumbnailFile, thumbnail)
 
 		// This is a data object that we will pass to the template
 		m := make(map[string]string)
+		m["PageTitle"] = "Upload Image Preview"
 		m["thumbnailPath"] = strings.TrimPrefix(imagePathWithoutExtension, ".") + "_thumb.png"
 		m["imagePath"] = strings.TrimPrefix(imagePathWithoutExtension, ".") + ".png"
 
+		// Wait 1 second for the TaskQueue then render template.
+		time.Sleep(1 * time.Second)
 		RenderTemplate(w, "./templates/uploadimagepreview.html", m)
 	} else {
 		w.Write([]byte("Failed to process uploaded file."))
