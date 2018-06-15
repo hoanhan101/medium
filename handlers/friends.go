@@ -4,7 +4,9 @@ import (
 	"net/http"
 )
 
-// FriendsHandler TODO
+// FriendsHandler returns friends page.
 func FriendsHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is our friends page."))
+	m := make(map[string]string)
+	m["PageTitle"] = "Friends"
+	RenderTemplate(w, "./templates/friends.html", m)
 }

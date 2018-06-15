@@ -6,5 +6,7 @@ import (
 
 // HomeHandler returns a homepage.
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is our homepage."))
+	m := make(map[string]string)
+	m["PageTitle"] = "Home"
+	RenderTemplate(w, "./templates/home.html", m)
 }

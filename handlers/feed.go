@@ -4,7 +4,9 @@ import (
 	"net/http"
 )
 
-// FeedHandler TODO
+// FeedHandler returns a feed page.
 func FeedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is our feed."))
+	m := make(map[string]string)
+	m["PageTitle"] = "Feed"
+	RenderTemplate(w, "./templates/feed.html", m)
 }
