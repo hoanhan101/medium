@@ -24,7 +24,7 @@ It is an on-going project. Below are the main tasks and goals.
 - [x] Implement datastores: MySQL, MongoDB, and Redis.
 - [x] Use secure cookie and persist user session.
 - [x] Introduce OpenSSL and add authentication middleware.
-- [ ] Implement an Asynchronous Task Queue for resizing images task.
+- [x] Implement an Asynchronous Task Queue for resizing images task.
 - [ ] Introduce GopherJS to render Client-Side Templates.
 - [ ] Make use of Local Storage.
 - [ ] Adapt Single Page Architecture.
