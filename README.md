@@ -14,6 +14,8 @@ practices of isomorphic application architecture.
 
 It is an on-going project. Below are the main tasks and goals.
 
+**Back-End Phase:**
+
 - [x] Build a Web Sever instance.
 - [x] Introduce custom Templates.
 - [x] Follow Model View Controller architecture.
@@ -25,11 +27,15 @@ It is an on-going project. Below are the main tasks and goals.
 - [x] Use secure cookie and persist user session.
 - [x] Introduce OpenSSL and add authentication middleware.
 - [x] Implement an Asynchronous Task Queue for resizing images task.
-- [ ] Introduce GopherJS to render Client-Side Templates.
-- [ ] Make use of Local Storage.
-- [ ] Adapt Single Page Architecture.
-- [ ] Polish functionalities: user's profile, image upload, friends list, news
-  feed,...
+
+**Front-End Phase:**
+- [x] Introduce GopherJS to implement Client-Side routing and templates
+  rendering.
+- [x] Adapt Single Page Architecture.
+- [ ] Implement core features and functionalities: user's profile, image 
+  upload, friends list, news, feed,...
+
+**Production Phase:**
 - [ ] Introduce Nginx.
 - [ ] Install a Let’s Encrypt SSL Certificate.
 - [ ] Cross compile application.
