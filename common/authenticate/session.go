@@ -3,7 +3,7 @@ package authenticate
 import (
 	"log"
 	"net/http"
-	// "os"
+	"os"
 
 	"github.com/hoanhan101/medium/models"
 
@@ -19,7 +19,7 @@ func init() {
 	// SessionStore = sessions.NewFilesystemStore("/tmp/medium-sessions", []byte(os.Getenv("MEDIUM_HASH_KEY")))
 
 	// Leave the first parameter an empty string to use os.TempDir()
-	SessionStore = sessions.NewFilesystemStore("", []byte("CRKVBJs0kfyeQ9Y1"))
+	SessionStore = sessions.NewFilesystemStore("", []byte(os.Getenv("MEDIUM_HASH_KEY")))
 }
 
 // CreateUserSession creates a user session.

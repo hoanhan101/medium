@@ -3,7 +3,7 @@ package authenticate
 import (
 	"log"
 	"net/http"
-	// "os"
+	"os"
 	"time"
 
 	"github.com/hoanhan101/medium/models"
@@ -24,11 +24,15 @@ var (
 )
 
 func init() {
-	// hashKey = []byte(os.Getenv("MEDIUM_HASH_KEY"))
-	// blockKey = []byte(os.Getenv("MEDIUM_BLOCK_KEY"))
-	hashKey = []byte("CRKVBJs0kfyeQ9Y1")
-	blockKey = []byte("9LtmRLzVH27CwxrO")
+	// Generate random hash keys.
+	hashKey = securecookie.GenerateRandomKey(32)
+	blockKey = securecookie.GenerateRandomKey(32)
 
+	// Save to environment variables.
+	os.Setenv("MEDIUM_HASH_KEY", string(hashKey))
+	os.Setenv("MEDIUM_BLOCK_KEY", string(blockKey))
+
+	// Create a new SecureCookie.
 	s = securecookie.New(hashKey, blockKey)
 }
 
