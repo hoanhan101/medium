@@ -15,10 +15,11 @@ type RedisDatastore struct {
 	*pool.Pool
 }
 
-// NewRedisDatastore creates a new MongoDB datastore.
+// NewRedisDatastore creates a new Redis datastore.
 func NewRedisDatastore(address string) (*RedisDatastore, error) {
 	// Connect via tcp with a size of 10.
 	connectionPool, err := pool.New("tcp", address, 10)
+	log.Printf("Creating a Redis connection pool.\n")
 	if err != nil {
 		return nil, err
 	}

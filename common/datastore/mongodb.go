@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"github.com/hoanhan101/medium/models"
+	"log"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -16,6 +17,7 @@ type MongoDBDatastore struct {
 func NewMongoDBDatastore(url string) (*MongoDBDatastore, error) {
 	// Create the connection.
 	session, err := mgo.Dial(url)
+	log.Printf("Creating a MongoDB session.\n")
 	if err != nil {
 		return nil, err
 	}

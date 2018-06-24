@@ -16,6 +16,7 @@ type MySQLDatastore struct {
 // NewMySQLDatastore creates a new MySQL datastore.
 func NewMySQLDatastore(dataSourceName string) (*MySQLDatastore, error) {
 	connection, err := sql.Open("mysql", dataSourceName)
+	log.Printf("Creating a MySQL connection.\n")
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
