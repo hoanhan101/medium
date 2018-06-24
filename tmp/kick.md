@@ -1,5 +1,10 @@
 # kick
 
+Install gopherjs.
+```
+go get -u github.com/gopherjs/gopherjs
+```
+
 Install kick.
 ```
 go get -u go.isomorphicgo.org/go/kick
