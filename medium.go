@@ -109,7 +109,11 @@ func main() {
 	stdChain := alice.New(middleware.RecoverPanicHandler)
 	http.Handle("/", stdChain.Then(loggedRouter))
 
-	err = http.ListenAndServeTLS(PORT, WebAppRoot+"/certs/mediumcert.pem", WebAppRoot+"/certs/mediumkey.pem", nil)
+	// TODO: Disable TLS connection for now. Remember to switch back during
+	// production.
+	// err = http.ListenAndServeTLS(PORT, WebAppRoot+"/certs/mediumcert.pem", WebAppRoot+"/certs/mediumkey.pem", nil)
+	log.Printf("Listenting at port %v", PORT)
+	err = http.ListenAndServe(PORT, nil)
 	if err != nil {
 		log.Fatal("ListenAndServeTLS: ", err)
 	}
